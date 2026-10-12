@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI x Biology Lab — Daniel Jordan Viray</title>
+<meta property="og:title" content="AI x Biology Lab — Daniel Jordan Viray">
+<meta property="og:description" content="Interactive, tech-first explanations of AI and machine learning applied to biology — for people who think in math and code. Visual first, verifiable always.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://danieljordanviray.github.io/ai-x-biology-lab/docs/index.html">
+<meta property="og:image" content="https://danieljordanviray.com/portrait.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI x Biology Lab — Daniel Jordan Viray">
+<meta name="twitter:description" content="Interactive, tech-first explanations of AI and machine learning applied to biology — for people who think in math and code. Visual first, verifiable always.">
+<style>
+body { font-family: -apple-system, Georgia, serif; max-width: 760px; margin: 0 auto;
+       padding: 40px 18px; line-height: 1.7; color: #1a1a1a; }
+a { color: #1f6feb; }
+#filter { width: 100%; font-size: 1rem; padding: 10px 14px; border: 1px solid #ccc;
+          border-radius: 8px; margin: 18px 0 6px; font-family: inherit; box-sizing: border-box; }
+h2.cat { margin-top: 2em; border-bottom: 1px solid #ddd; padding-bottom: 6px; font-size: 1.25em; }
+.post { margin: 1em 0; }
+.post a.title { font-size: 1.1em; font-weight: 600; text-decoration: none; }
+.post a.title:hover { text-decoration: underline; }
+.post p { margin: 4px 0; color: #333; }
+.soon { color: #888; font-style: italic; }
+.hidden { display: none; }
+#noresults { display: none; color: #555; margin-top: 2em; }
+.log { background: #f6f8fa; border: 1px solid #e1e4e8; border-radius: 8px; padding: 14px 18px; margin: 1.5em 0; }
+.log h3 { margin: 0.8em 0 0.3em; font-size: 1em; }
+.log h3:first-child { margin-top: 0; }
+.log ul { margin: 0.3em 0; padding-left: 1.2em; }
+footer { margin-top: 3em; color: #888; font-size: 0.9em; border-top: 1px solid #ddd; padding-top: 1em; }
+</style></head><body>
+<h1>AI x Biology Lab</h1>
+<p><strong>by Daniel Jordan Viray.</strong> Interactive, tech-first explanations of AI and
+machine learning applied to biology &mdash; for people who think in math and code.
+Every piece starts from a computing idea (a scanner, a string search, a supervised
+learning problem) and shows the biology it unlocks. Visual first, verifiable always:
+synthetic data with planted truths, code you can check, no trust-me statistics.</p>
+
+<div class="log">
+<h3>Now</h3>
+<ul><li>Lab site is live (Oct 12, 2026). First piece in the workshop: the
+<strong>CRISPR Guide Designer</strong> &mdash; an interactive guide-design workbench plus
+in-browser machine learning that rediscovers the seed region from planted-truth data.</li></ul>
+<h3>Next</h3>
+<ul>
+<li>CRISPR Guide Designer v1 (publishes after review)</li>
+<li>DNA sequence models, tech-first: k-mer embeddings &rarr; genomic language models</li>
+<li>Perturbation screens: reading CRISPR knockout screens as causal inference</li>
+</ul>
+<h3>Shipped</h3>
+<ul><li><span class="soon">Nothing yet &mdash; the lab just opened.</span></li></ul>
+</div>
+
+<input id="filter" type="text" placeholder="Filter topics&hellip;" aria-label="Filter topics">
+
+<div id="index">
+<section data-cat="gene-editing">
+<h2 class="cat">Gene Editing</h2>
+<div class="post"><span class="title soon">CRISPR Guide Designer</span><p class="soon">In the workshop &mdash; an interactive workbench for CRISPR guide design: watch the mechanism, score guides like a string-search problem, then train a model that discovers the seed region from data. Not yet published.</p></div>
+</section>
+<section data-cat="sequence-models">
+<h2 class="cat">Sequence Models</h2>
+<p class="soon">K-mer embeddings and genomic language models &mdash; coming soon.</p>
+</section>
+<section data-cat="screens">
+<h2 class="cat">Perturbation Screens</h2>
+<p class="soon">CRISPR knockout screens read as causal inference &mdash; coming soon.</p>
+</section>
+</div>
+<p id="noresults">No topics match that filter.</p>
+
+<footer>Built by an AI employee, reviewed by a human boss.</footer>
+
+<script>
+const input = document.getElementById("filter");
+input.addEventListener("input", () => {
+  const q = input.value.trim().toLowerCase();
+  let visible = 0;
+  document.querySelectorAll("#index section").forEach(sec => {
+    let secVisible = 0;
+    sec.querySelectorAll(".post").forEach(post => {
+      const hit = !q || post.textContent.toLowerCase().includes(q);
+      post.classList.toggle("hidden", !hit);
+      if (hit) secVisible++;
+    });
+    const soon = sec.querySelector(".soon");
+    if (soon) soon.classList.toggle("hidden", !!q);
+    const showSec = secVisible > 0 || (!q && soon);
+    sec.classList.toggle("hidden", !showSec);
+    if (showSec) visible++;
+  });
+  document.getElementById("noresults").style.display = visible ? "none" : "block";
+});
+</script>
+</body></html>
